@@ -20,7 +20,7 @@
 
     @foreach (var item in Model)
     {
-        <tr class="link" onclick="location.href='@Url.Action("Entry", "Discussions")'">
+        <tr class="link" onclick="location.href='@Url.Action("Entry", "Discussions", new { id = item.DiscussionId})'">
             <td>
                 @Html.DisplayFor(modelItem => item.DiscussionName)
             </td>

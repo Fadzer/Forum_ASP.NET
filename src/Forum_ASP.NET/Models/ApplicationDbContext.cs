@@ -10,7 +10,7 @@ namespace Forum_ASP.NET.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Discussion> Discussions { get; set; }
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Posts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
