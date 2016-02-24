@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Forum_ASP.NET.Models.Discussion>
+@{
+    ViewBag.Title = "Discussions";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a class="btn btn-default" onclick="location.href='@Url.Action("Create", "Discussions")'">New</a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>First Comment</th>
+        <th>Author</th>
+        <th>Last Date</th>
+        <th>Creating Date</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="link" onclick="location.href='@Url.Action("Entry", "Discussions")'">
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscussionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstComment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatingDate)
+            </td>
+        </tr>
+    }
+</table>
