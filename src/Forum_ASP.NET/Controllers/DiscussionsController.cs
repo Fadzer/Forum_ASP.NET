@@ -25,9 +25,14 @@ namespace Forum_ASP.NET.Controllers
             return View();
         }
 
-        public IActionResult Entry()
+        public IActionResult CreateComment()
         {
-            return View(_context.Discussions.ToList());
+            return View();
+        }
+
+        public IActionResult Comment()
+        {
+            return View(_context.Comment.ToList());
         }
 
         [HttpPost]
@@ -45,6 +50,23 @@ namespace Forum_ASP.NET.Controllers
             }
 
             return View(discussion);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateComment(Discussion discussion, Comment comment, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                //discussion.LastDate = DateTime.Now.ToString();
+                comment.CommentDate = DateTime.Now.ToString();
+                comment.CommentAuthor = User.GetUserName();
+                _context.Comment.Add(comment);
+                _context.SaveChanges();
+                return RedirectToAction("Comment");
+            }
+
+            return View(comment);
         }
 
     }

@@ -6,13 +6,12 @@
 <h2>@ViewData["Title"]</h2>
 
 <p>
-    <a class="btn btn-default" onclick="location.href='@Url.Action("Create", "Discussions")'">New</a>
+    <a class="btn btn-default" onclick="location.href='@Url.Action("Create", "Discussions")'">New Discussion</a>
 </p>
 
 <table class="table">
     <tr>
         <th>Name</th>
-        <th>First Comment</th>
         <th>Author</th>
         <th>Last Date</th>
         <th>Creating Date</th>
@@ -20,12 +19,9 @@
 
     @foreach (var item in Model)
     {
-        <tr class="link" onclick="location.href='@Url.Action("Entry", "Discussions", new { id = item.DiscussionId})'">
+        <tr class="link" onclick="location.href='@Url.Action("Comment", "Discussions")'">
             <td>
                 @Html.DisplayFor(modelItem => item.DiscussionName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstComment)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Author)

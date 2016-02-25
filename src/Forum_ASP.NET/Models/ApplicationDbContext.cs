@@ -10,7 +10,7 @@ namespace Forum_ASP.NET.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Discussion> Discussions { get; set; }
-        public DbSet<Comment> Posts { get; set; }
+        public DbSet<Comment> Comment { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -18,7 +18,7 @@ namespace Forum_ASP.NET.Models
 
             // Make Blog.Url required ???
             builder.Entity<Discussion>()
-                .Property(b => b.FirstComment)
+                .Property(b => b.DiscussionId)
                 .IsRequired();
         }
     }

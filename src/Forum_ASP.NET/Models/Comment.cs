@@ -6,11 +6,13 @@ namespace Forum_ASP.NET.Models
 {
     public class Comment
     {
+        [Key]
         public int CommentId { get; set; }
+        [Required]
         public string Content { get; set; }
         public string CommentAuthor { get; set; }
+        public string CommentDate { get; set; }
 
-        public int Discussionname { get; set; }
-        public Discussion Discussion { get; set; }
+        public Discussion DiscussionId { get; set; }
     }
 }
