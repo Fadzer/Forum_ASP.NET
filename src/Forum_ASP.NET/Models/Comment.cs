@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Entity;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Forum_ASP.NET.Models
 {
@@ -8,11 +9,14 @@ namespace Forum_ASP.NET.Models
     {
         [Key]
         public int CommentId { get; set; }
-        [Required]
+        public int DiscussionId { get; set; }
+        //[Required]
         public string Content { get; set; }
         public string CommentAuthor { get; set; }
         public string CommentDate { get; set; }
 
-        public Discussion DiscussionId { get; set; }
+        //ERROR
+        [ForeignKey("DiscussionId")]
+        public virtual Discussion Discussion { get; set; }
     }
 }

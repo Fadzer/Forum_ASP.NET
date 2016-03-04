@@ -13,8 +13,14 @@ namespace Forum_ASP.NET.Models
         public string CreatingDate { get; set; }
         public string LastDate { get; set; }
 
-        public Comment comment { get; set; }
+        //Error
+        //public Comment Comment { get; set; }
 
-        public List<Comment> Comment { get; set; }
+        public virtual List<Comment> Comments { get; set; }
+
+        public Discussion()
+        {
+            Comments = new List<Comment>();
+        }
     }
 }
