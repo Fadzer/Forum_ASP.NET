@@ -33,29 +33,20 @@ namespace Forum_ASP.NET.Controllers
 
 		public IActionResult CreateComment( int id )
 		{
-			//var m = await FindCommentAsync(id);
 			Comment comment = new Comment()
 			{
 				DiscussionId = id,
 			};
-			//var comment = new Comment()
-			//{
-			//    DiscussionId = id
-			//};
+
 			return View( comment );
 		}
 
-		// Details in the Tutorial (Should be the same (an right solution :D))
 		public async Task<ActionResult> Comment( int id )
 		{
 			var comment = await FindCommentAsync( id );
-			//Discussion discussion = await _context.Discussions
-			//.Include(b => b.Comment)
-			//.SingleOrDefaultAsync(b => b.DiscussionId == id);
+
 			if ( comment == null )
 			{
-				// Logger: see iLogger or getting started > Fundamentals > logging
-				//Logger.LogInformation("Details: Item not found {0}", id);
 				return HttpNotFound();
 			}
 			return View( comment );
@@ -67,17 +58,13 @@ namespace Forum_ASP.NET.Controllers
 		{
 			if ( ModelState.IsValid )
 			{
-				// List type ? in Discussion?
-				//discussion.Comments.Add("Test");
 				discussion.CreatingDate = DateTime.Now.ToString();
 				discussion.LastDate = DateTime.Now.ToString();
 				discussion.Author = User.GetUserName();
-                //_context.Comment.Add(comment);
                 comment.Content = discussion.FirstComment;
                 comment.CommentDate = discussion.CreatingDate;
                 comment.CommentAuthor = discussion.Author;
                 _context.Discussions.Add( discussion );
-				//_context.SaveChanges();
 				comment.DiscussionId = discussion.DiscussionId;
 				_context.Comment.Add( comment );
 				_context.SaveChanges();
@@ -93,9 +80,7 @@ namespace Forum_ASP.NET.Controllers
 		{
 			if ( ModelState.IsValid )
 			{
-				//comment.DiscussionId = id;
 				comment.Discussion = await FindDiscussionAsync( comment.DiscussionId );
-				//discussion.LastDate = DateTime.Now.ToString();
 				comment.Discussion.LastDate = DateTime.Now.ToString();
 				comment.CommentDate = DateTime.Now.ToString();
 				comment.CommentAuthor = User.GetUserName();
@@ -112,8 +97,6 @@ namespace Forum_ASP.NET.Controllers
 			Discussion discussion = await FindDiscussionAsync( id );
 			if ( discussion == null )
 			{
-				// Logger: see iLogger or getting started > Fundamentals > logging
-				//Logger.LogInformation("Edit: Item not found {0}", id);
 				return HttpNotFound();
 			}
 
@@ -149,20 +132,11 @@ namespace Forum_ASP.NET.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> Update( int id, [Bind( "DiscussionName", "CreatingDate", "LastDate", "Comments", "Author" )] Discussion discussion )
 		{
-			//try
-			//{
 			discussion.DiscussionId = id;
 			_context.Discussions.Attach( discussion );
 			_context.Entry( discussion ).State = EntityState.Modified;
 			await _context.SaveChangesAsync();
 			return RedirectToAction( "Index" );
-			//}
-			// DataStoreExeption No Idea how to use it
-			//catch (DataStoreException)
-			//{
-			//    ModelState.AddModelError(string.Empty, "Unable to save changes.");
-			//}
-			//return View(discussion);
 		}
 	}
 }

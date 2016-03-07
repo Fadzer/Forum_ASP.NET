@@ -14,9 +14,6 @@ namespace Forum_ASP.NET.Models
         public string LastDate { get; set; }
         public string FirstComment { get; set; }
 
-        //Error
-        //public Comment Comment { get; set; }
-
         public virtual List<Comment> Comments { get; set; }
 
         public Discussion()

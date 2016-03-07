@@ -16,7 +16,6 @@ namespace Forum_ASP.NET.Models
         {
             base.OnModelCreating(builder);
 
-            // Make Blog.Url required ???
             builder.Entity<Discussion>()
                 .Property(b => b.DiscussionId)
                 .IsRequired();

@@ -15,7 +15,6 @@ namespace Forum_ASP.NET.Models
         public string CommentAuthor { get; set; }
         public string CommentDate { get; set; }
 
-        //ERROR
         [ForeignKey("DiscussionId")]
         public virtual Discussion Discussion { get; set; }
     }

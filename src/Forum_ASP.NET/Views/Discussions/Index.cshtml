@@ -25,7 +25,7 @@ else { }
 
     @foreach (var item in Model.OrderByDescending(item => item.LastDate))
     {
-        <tr> <!--class="link" onclick="location.href='atUrl.Action("Comment", "Discussions")'">-->
+        <tr>
             <td>
                 <a class="rowLink" asp-action="Comment" asp-controller="Discussions" asp-route-id="@item.DiscussionId"></a>
             </td>
