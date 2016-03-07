@@ -73,7 +73,7 @@ namespace Forum_ASP.NET.Controllers
 				discussion.LastDate = DateTime.Now.ToString();
 				discussion.Author = User.GetUserName();
                 //_context.Comment.Add(comment);
-                comment.Content = discussion.DiscussionName;
+                comment.Content = discussion.FirstComment;
                 comment.CommentDate = discussion.CreatingDate;
                 comment.CommentAuthor = discussion.Author;
                 _context.Discussions.Add( discussion );

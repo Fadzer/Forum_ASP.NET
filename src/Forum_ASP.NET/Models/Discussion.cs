@@ -12,6 +12,7 @@ namespace Forum_ASP.NET.Models
         public string Author { get; set; }
         public string CreatingDate { get; set; }
         public string LastDate { get; set; }
+        public string FirstComment { get; set; }
 
         //Error
         //public Comment Comment { get; set; }
