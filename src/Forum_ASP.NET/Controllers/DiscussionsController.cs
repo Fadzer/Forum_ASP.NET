@@ -67,15 +67,16 @@ namespace Forum_ASP.NET.Controllers
 		{
 			if ( ModelState.IsValid )
 			{
-
-				comment.Content = "First Comment";
 				// List type ? in Discussion?
 				//discussion.Comments.Add("Test");
 				discussion.CreatingDate = DateTime.Now.ToString();
 				discussion.LastDate = DateTime.Now.ToString();
 				discussion.Author = User.GetUserName();
-				//_context.Comment.Add(comment);
-				_context.Discussions.Add( discussion );
+                //_context.Comment.Add(comment);
+                comment.Content = discussion.DiscussionName;
+                comment.CommentDate = discussion.CreatingDate;
+                comment.CommentAuthor = discussion.Author;
+                _context.Discussions.Add( discussion );
 				//_context.SaveChanges();
 				comment.DiscussionId = discussion.DiscussionId;
 				_context.Comment.Add( comment );

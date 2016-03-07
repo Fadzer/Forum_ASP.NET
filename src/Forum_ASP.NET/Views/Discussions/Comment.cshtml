@@ -8,23 +8,23 @@
 <h2>@ViewData["Title"]</h2>
 
 <p>
-    
-    <a asp-action="CreateComment" asp-controller="Discussions" asp-route-id="@Model.First().DiscussionId">New Comment</a>
-    <!--<a class="btn btn-default" onclick="location.href='atUrl.Action("CreateComment", "Discussions")'">New Comment</a>-->
+    <a class="btn btn-default" asp-action="CreateComment" asp-controller="Discussions" asp-route-id="@Model.First().DiscussionId">New Comment</a>
 </p>
 
-<table class="table">
+<table>
     <tr>
-        <th>Author</th>
-        <th>Comment</th>
-        <th>Date</th>
+        <th width="1%"></th>
+        <th width="20%">Author</th>
+        <th width="60%">Comment</th>
+        <th width="20%">Date</th>
     </tr>
-    <!--foreach (var item in Model.Where(modelItem => item.DiscussionId.Equals(id))-->
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                <!--Html.DisplayFor(modelItem => item.CommentId.Equals(id))-->
+                <a class="rowLink"></a>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.CommentAuthor)
             </td>
             <td>
@@ -32,12 +32,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CommentDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CommentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiscussionId)
             </td>
         </tr>
     }

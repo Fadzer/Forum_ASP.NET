@@ -32,8 +32,30 @@ textarea {
         z-index: 10 !important;
     }
 
-/* Tabellen link */
-tr { empty-cells: show; }
-    tr.link {color: royalblue; cursor:pointer; }
-    tr.link:hover {background-color: lightgrey;}
+    table {
+        width: 100%;
+        border-top: 2px solid #dddddd;
+        border-bottom: 2px solid #dddddd;
+    }
+
+    th, td {
+    border-bottom: 1px solid #dddddd;
+    height: 50px;
+    }
+
+    table tr td:first-child {
+        position: relative;
+    }
+
+    a.rowLink {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 50px;
+    }
+
+    a.rowLink:hover {
+        background-color: #33ccff;
+        opacity: 0.1;
+    }
 }
