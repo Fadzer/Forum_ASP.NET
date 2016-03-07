@@ -45,12 +45,6 @@ namespace Forum_ASP.NET.Controllers
 			return View( comment );
 		}
 
-		public IActionResult TComment( int id )
-		{
-			//.Where(discussion => discussion.DiscussionId == id)
-			return View( _context.Comment.ToList() );
-		}
-
 		// Details in the Tutorial (Should be the same (an right solution :D))
 		public async Task<ActionResult> Comment( int id )
 		{
