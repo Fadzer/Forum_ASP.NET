@@ -23,7 +23,7 @@ else { }
         <th width="20%">Creating Date</th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderByDescending(item => item.LastDate))
     {
         <tr> <!--class="link" onclick="location.href='atUrl.Action("Comment", "Discussions")'">-->
             <td>

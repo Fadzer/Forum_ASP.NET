@@ -23,7 +23,7 @@ else { }
         <th width="60%">Comment</th>
         <th width="20%">Date</th>
     </tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderBy(item => item.CommentDate))
     {
         <tr>
             <td>
