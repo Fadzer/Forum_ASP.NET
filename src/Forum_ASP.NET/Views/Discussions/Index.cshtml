@@ -1,13 +1,18 @@
-﻿@model IEnumerable<Forum_ASP.NET.Models.Discussion>
+﻿@using System.Security.Claims
+@model IEnumerable<Forum_ASP.NET.Models.Discussion>
 @{
     ViewBag.Title = "Discussions";
 }
 
 <h2>@ViewData["Title"]</h2>
 
+@if (User.IsSignedIn())
+{
 <p>
     <a class="btn btn-default" asp-action="Create" asp-controller="Discussions">New Discussion</a>
 </p>
+}
+else { }
 
 <table>
     <tr>
