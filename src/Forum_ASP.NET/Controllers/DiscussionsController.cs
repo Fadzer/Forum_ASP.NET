@@ -92,7 +92,19 @@ namespace Forum_ASP.NET.Controllers
 			return View( comment );
 		}
 
-		public async Task<ActionResult> CommentEdit( int id )
+        public async Task<ActionResult> Edit(int id)
+        {
+            Discussion discussion = await FindDiscussionAsync(id);
+            if (discussion == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Items = GetAuthorsListItems(discussion.DiscussionId);
+            return View(discussion);
+        }
+
+        public async Task<ActionResult> CommentEdit( int id )
 		{
 			Comment comment = await FindCommentAsync( id );
 			if ( comment == null )
@@ -133,11 +145,24 @@ namespace Forum_ASP.NET.Controllers
 					} );
 		}
 
-		[HttpPost]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Update(int id, [Bind("DiscussionName", "CreatingDate", "LastDate", "Comments", "Author")] Discussion discussion)
+        {
+            discussion.DiscussionId = id;
+            discussion.LastDate = DateTime.Now.ToString();
+            _context.Discussions.Attach(discussion);
+            _context.Entry(discussion).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> CommentUpdate( int id, [Bind( "Content", "CommentDate", "CommentAuthor", "DiscussionId")] Comment comment )
 		{
             comment.CommentId = id;
+            //comment.Discussion.LastDate = DateTime.Now.ToString();
             _context.Comment.Attach( comment );
 			_context.Entry( comment ).State = EntityState.Modified;
 			await _context.SaveChangesAsync();

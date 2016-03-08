@@ -10,9 +10,19 @@
 
 @if (User.IsSignedIn())
 {
-<p>
-    <a class="btn btn-default" asp-action="CreateComment" asp-controller="Discussions" asp-route-id="@Model.First().DiscussionId">New Comment</a>
-</p>
+    if (User.Identity.Name.Equals(Model.Last().CommentAuthor))
+    {
+    <p>
+        <a class="btn btn-default" asp-action="CreateComment" asp-controller="Discussions" asp-route-id="@Model.First().DiscussionId">New Comment</a>
+        <a class="btn btn-default" asp-action="Edit" asp-controller="Discussions" asp-route-id="@Model.First().DiscussionId">Edit</a>
+    </p>
+    }
+    else
+    {
+    <p>
+        <a class="btn btn-default" asp-action="CreateComment" asp-controller="Discussions" asp-route-id="@Model.First().DiscussionId">New Comment</a>
+    </p>
+    }
 }
 else { }
 
