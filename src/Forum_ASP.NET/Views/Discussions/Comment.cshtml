@@ -10,7 +10,7 @@
 
 @if (User.IsSignedIn())
 {
-    if (User.Identity.Name.Equals(Model.Last().CommentAuthor))
+    if (User.Identity.Name.Equals(Model.First().CommentAuthor))
     {
     <p>
         <a class="btn btn-default" asp-action="CreateComment" asp-controller="Discussions" asp-route-id="@Model.First().DiscussionId">New Comment</a>

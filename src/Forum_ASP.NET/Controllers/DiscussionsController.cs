@@ -92,6 +92,7 @@ namespace Forum_ASP.NET.Controllers
 			return View( comment );
 		}
 
+        //Edit
         public async Task<ActionResult> Edit(int id)
         {
             Discussion discussion = await FindDiscussionAsync(id);
@@ -104,6 +105,7 @@ namespace Forum_ASP.NET.Controllers
             return View(discussion);
         }
 
+        //Comment Edit
         public async Task<ActionResult> CommentEdit( int id )
 		{
 			Comment comment = await FindCommentAsync( id );
@@ -116,21 +118,25 @@ namespace Forum_ASP.NET.Controllers
 			return View( comment );
 		}
 
-		private Task<Discussion> FindDiscussionAsync( int id )
+        //Find Async for Edit
+        private Task<Discussion> FindDiscussionAsync( int id )
 		{
 			return _context.Discussions.Include( c => c.Comments ).SingleOrDefaultAsync( discussion => discussion.DiscussionId == id );
 		}
 
-		private Task<List<Comment>> FindCommentsAsync( int id )
+        //Find Async for Edit
+        private Task<List<Comment>> FindCommentsAsync( int id )
 		{
 			return _context.Comment.Where( comment => comment.DiscussionId == id ).ToListAsync<Comment>();
 		}
 
+        //Find Async for CommentEdit
         private Task<Comment> FindCommentAsync(int id)
         {
             return _context.Comment.Include(c => c.Discussion).SingleOrDefaultAsync(comment => comment.CommentId == id);
         }
 
+        //
         private IEnumerable<SelectListItem> GetAuthorsListItems( int selected = -1 )
 		{
 			var tmp = _context.Discussions.ToList();
@@ -145,6 +151,7 @@ namespace Forum_ASP.NET.Controllers
 					} );
 		}
 
+        //Edit Update 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Update(int id, [Bind("DiscussionName", "CreatingDate", "LastDate", "Comments", "Author")] Discussion discussion)
@@ -157,14 +164,15 @@ namespace Forum_ASP.NET.Controllers
             return RedirectToAction("Index");
         }
 
+        //Comment Edit Upddate
         [HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> CommentUpdate( int id, [Bind( "Content", "CommentDate", "CommentAuthor", "DiscussionId")] Comment comment )
+		public async Task<ActionResult> CommentUpdate( int id, [Bind( "Content", "CommentDate", "CommentAuthor", "DiscussionId", "CommentId")] Comment comment )
 		{
-            comment.CommentId = id;
-            //comment.Discussion.LastDate = DateTime.Now.ToString();
-            _context.Comment.Attach( comment );
-			_context.Entry( comment ).State = EntityState.Modified;
+            _context.Comment.Attach(comment);
+            _context.Entry(comment).State = EntityState.Modified;
+            comment.Discussion = await FindDiscussionAsync(comment.DiscussionId);
+            comment.Discussion.LastDate = DateTime.Now.ToString();
 			await _context.SaveChangesAsync();
             return RedirectToAction("Comment", new { id = comment.DiscussionId });
         }
