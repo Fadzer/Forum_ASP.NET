@@ -27,7 +27,21 @@ else { }
     {
         <tr>
             <td>
-                <a class="rowLink"></a>
+                @if (User.IsSignedIn())
+                {
+                    if (User.Identity.Name.Equals(item.CommentAuthor))
+                    {
+                    <a class="rowLink" asp-action="CommentEdit" asp-controller="Discussions" asp-route-id="@item.CommentId"></a>
+                    }
+                    else
+                    {
+                        <a class="rowLink"></a>
+                    }
+                }
+                else
+                {
+                    <a class="rowLink"></a>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CommentAuthor)

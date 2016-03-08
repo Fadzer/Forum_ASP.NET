@@ -43,7 +43,7 @@ namespace Forum_ASP.NET.Controllers
 
 		public async Task<ActionResult> Comment( int id )
 		{
-			var comment = await FindCommentAsync( id );
+			var comment = await FindCommentsAsync( id );
 
 			if ( comment == null )
 			{
@@ -92,16 +92,16 @@ namespace Forum_ASP.NET.Controllers
 			return View( comment );
 		}
 
-		public async Task<ActionResult> Edit( int id )
+		public async Task<ActionResult> CommentEdit( int id )
 		{
-			Discussion discussion = await FindDiscussionAsync( id );
-			if ( discussion == null )
+			Comment comment = await FindCommentAsync( id );
+			if ( comment == null )
 			{
 				return HttpNotFound();
 			}
 
-			ViewBag.Items = GetAuthorsListItems( discussion.DiscussionId );
-			return View( discussion );
+			ViewBag.Items = GetAuthorsListItems( comment.CommentId );
+			return View( comment );
 		}
 
 		private Task<Discussion> FindDiscussionAsync( int id )
@@ -109,12 +109,17 @@ namespace Forum_ASP.NET.Controllers
 			return _context.Discussions.Include( c => c.Comments ).SingleOrDefaultAsync( discussion => discussion.DiscussionId == id );
 		}
 
-		private Task<List<Comment>> FindCommentAsync( int id )
+		private Task<List<Comment>> FindCommentsAsync( int id )
 		{
 			return _context.Comment.Where( comment => comment.DiscussionId == id ).ToListAsync<Comment>();
 		}
 
-		private IEnumerable<SelectListItem> GetAuthorsListItems( int selected = -1 )
+        private Task<Comment> FindCommentAsync(int id)
+        {
+            return _context.Comment.Include(c => c.Discussion).SingleOrDefaultAsync(comment => comment.CommentId == id);
+        }
+
+        private IEnumerable<SelectListItem> GetAuthorsListItems( int selected = -1 )
 		{
 			var tmp = _context.Discussions.ToList();
 
@@ -130,13 +135,13 @@ namespace Forum_ASP.NET.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Update( int id, [Bind( "DiscussionName", "CreatingDate", "LastDate", "Comments", "Author" )] Discussion discussion )
+		public async Task<ActionResult> CommentUpdate( int id, [Bind( "Content", "CommentDate", "CommentAuthor", "DiscussionId")] Comment comment )
 		{
-			discussion.DiscussionId = id;
-			_context.Discussions.Attach( discussion );
-			_context.Entry( discussion ).State = EntityState.Modified;
+            comment.CommentId = id;
+            _context.Comment.Attach( comment );
+			_context.Entry( comment ).State = EntityState.Modified;
 			await _context.SaveChangesAsync();
-			return RedirectToAction( "Index" );
-		}
+            return RedirectToAction("Comment", new { id = comment.DiscussionId });
+        }
 	}
 }
