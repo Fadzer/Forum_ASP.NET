@@ -49,7 +49,7 @@ namespace Forum_ASP.NET
                 .AddSqlite()
                 .AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlite(Configuration["Data:DefaultConnection:SqliteConnectionString"]));
-
+           
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -99,6 +99,11 @@ namespace Forum_ASP.NET
             app.UseStaticFiles();
 
             app.UseIdentity();
+
+            //Bei Änderung am Model einmal anwenden
+            //var db = app.ApplicationServices.GetService<ApplicationDbContext>();
+            //db.Database.EnsureDeleted();
+            //db.Database.EnsureCreated();
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
