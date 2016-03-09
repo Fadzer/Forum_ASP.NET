@@ -46,9 +46,9 @@ namespace Forum_ASP.NET
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddEntityFramework()
-                .AddInMemoryDatabase()
+                .AddSqlite()
                 .AddDbContext<ApplicationDbContext>(options =>
-                    options.UseInMemoryDatabase());
+                    options.UseSqlite(Configuration["Data:DefaultConnection:SqliteConnectionString"]));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
