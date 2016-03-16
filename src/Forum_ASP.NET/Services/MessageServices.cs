@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.OptionsModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Forum_ASP.NET.Services
         public Task SendEmailAsync(string email, string subject, string message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+                return Task.FromResult(0);
         }
 
         public Task SendSmsAsync(string number, string message)

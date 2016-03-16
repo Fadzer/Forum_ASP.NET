@@ -1,0 +1,30 @@
+﻿@using System.Security.Claims
+@model IEnumerable<Forum_ASP.NET.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a class="btn btn-default" asp-action="Create" asp-controller="Roles">New Role</a>
+</p>
+
+<table>
+    <tr>
+        <th width="1%"></th>
+        <th width="20%">Roles</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a class="rowLink" asp-action="Edit" asp-controller="Roles"></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Roles)
+            </td>
+        </tr>
+    }
+</table>
